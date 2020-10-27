@@ -46,6 +46,18 @@ public class CpuProfileTest
     assertTrue (baos.toString ().contains ("Thread.sleep"));
   }
 
+  @Test(expected = IllegalArgumentException.class)
+  public void testRecord_FrequencyTooHigh() throws Exception
+  {
+    CpuProfile.record(Duration.ofSeconds(1), 1001, Thread.State.TIMED_WAITING);
+  }
+
+  @Test(expected = IllegalArgumentException.class)
+  public void testRecord_FrequencyTooLow() throws Exception
+  {
+    CpuProfile.record(Duration.ofSeconds(1), 0, Thread.State.TIMED_WAITING);
+  }
+
   @Test
   public void testisRunnable ()
   {
